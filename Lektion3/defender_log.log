@@ -1,0 +1,8 @@
+# Windows Defender Log File Example
+# Generated: 2025-04-01
+
+2025-04-01 12:34:56, INFO, Windows Defender, Quarantined, "C:\Users\Hugo\AppData\Local\Temp\malicious.exe", Trojan:Win32/Emotet, User: Hugo, Details: "File moved to quarantine."
+2025-04-01 12:36:00, INFO, Windows Defender, Removed, "C:\Program Files\Example\bad.dll", Worm:Win32/Conficker, User: Hugo, Details: "Threat removed."
+2025-04-01 13:00:10, WARN, Windows Defender, Detected, "C:\Users\Hugo\Downloads\suspicious.doc", Trojan:Win32/FakeAlert, User: Hugo, Details: "Suspicious file detected."
+2025-04-01 13:05:25, INFO, Windows Defender, Cleaned, "C:\Users\Hugo\Documents\report.docx", None, User: Hugo, Details: "File scanned, no threat found."
+2025-04-01 13:20:45, INFO, Windows Defender, Quarantined, "C:\Users\Hugo\AppData\Local\Temp\unknown.bin", Adware:Win32/Suspect, User: Hugo, Details: "File isolated from system."
