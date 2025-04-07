@@ -11,7 +11,7 @@ REPORT_FILE="C:\Users\Hugo\Downloads\log_report.txt"
 echo "Ange max antal rader att analysera: "
 
 #Läser användarens inmatning för max antal rader. Detta låter användaren bestämma hur många rader av loggfilen som ska analyseras.
-read MAX_LINES
+read -r MAX_LINES
 
 #Kontrollerar om loggfilen finns och är läsbar.
 if [ ! -r "$LOG_FILE" ]; then
