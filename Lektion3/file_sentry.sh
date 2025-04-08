@@ -11,7 +11,7 @@ readonly TARGET_DIR="$1"    # Första argumentet är katalogen. Användningen bl
 
 set -e      # Avslutar vid error. Om ett kommando failar avslutas skriptet direkt.
 set -u      # Avslutar skripet om odefinierade variabler används. 
-trap 'echo "Skript avbrutet"; rm -f "$TEMP_FILE"; exit 1'  
+trap 'echo "Skript avbrutet"; rm -f "$TEMP_FILE"; exit 1' INT TERM EXIT
 # Reagerar med "set" kommandon. Avslutar skripet på ett rent sätt, meddelar användaren, tar bort .temp filen och stänger med error koden 1.
 
 
