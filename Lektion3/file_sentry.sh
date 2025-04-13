@@ -2,6 +2,7 @@
 # file_sentry.sh - Övervakar en katalog för misstänkta filer
 # Skapat av: Hugo Backe, April 2025
 
+#set -x      # Visar allt som händer när skriptet körs. Bra för debugging.
 set -e      # Avslutar vid error. Om ett kommando failar avslutas skriptet direkt.
 set -u      # Avslutar skripet om odefinierade variabler används. 
 trap 'echo "Skript avbrutet"; rm -f "$TEMP_FILE"; exit 1' INT TERM
@@ -10,11 +11,23 @@ trap 'echo "Skript avbrutet"; rm -f "$TEMP_FILE"; exit 1' INT TERM
 # Globala variablar.
 readonly LOG_FILE="/c/Users/Hugo/Documents/GitHub/Shellscripting-kurs/Lektion3/defender_log.txt"    #Loggfil i min lektions folder.
 readonly TEMP_FILE="/c/Users/Hugo/Documents/GitHub/Shellscripting-kurs/Lektion3/temp_file_sentry$$.txt"    #Temporär fil i min lektions folder.
-readonly SIZE_THRESHOLD=1048576     # 1MB i bytes.
-readonly TARGET_DIR="${1:-}"    # Första argumentet är katalogen. Användningen blir då ./file_sentry.sh <katalog> där "katalog" blir $1.
+readonly SIZE_THRESHOLD="${2:-1048576}"  # Justerbar storlekströskel, standardvärde på 1MB om inget annat anges.
+readonly TARGET_DIR="${1:-}"    # Första argumentet är katalogen. Användningen blir då ./file_sentry.sh <katalog> där "katalog" blir $1. Om inget värde sätts här så defaultar den till tom.
+
+# Variabelnummer för sammanfattning.
+#large_file_count=0
+#executable_file_count=0
+
+# Funktion för sammanfattning.
+#summarize_results() {
+ #   echo "Sammanfattning"
+  # echo "Antal körbara filer: $executable_file_count"
+   # log_message "INFO" "Sammanfattning: $large_file_count stora filer. $executable_file_count körbara filer"
+#}
 
 
-log_message() {     # Funktion som ska logga meddelanden. Skriver tidstämplar och nivåer i loggfilen, bra för spårbarhet.
+# Funktion som ska logga meddelanden. Skriver tidstämplar och nivåer i loggfilen, bra för spårbarhet.
+log_message() {     
     local level="$1"    # Lokal variabel. Med dom olika nivåerna: Info, Warning och Error.
     local message="$2"  # Lokal variabel. Innehåller meddelandet.
     # $1 och $2 är det första och andra argumentet som blir tillagt efter att jag kallat på denna funktionen.
@@ -63,15 +76,21 @@ while read -r size perms name; do
     if (( size > SIZE_THRESHOLD )); then
         log_message "WARNING" "Stor fil: $name ($size bytes)"
         echo "Varning: $name är över $SIZE_THRESHOLD bytes!" >&2
+        #((large_file_count++))  # Ökar värdet på filräknaren.
     fi
  
     # Kontrollerar körbara rättigheter
     if [[ "$perms" =~ x ]]; then
         log_message "WARNING" "Körbar fil: $name ($perms)"
         echo "Varning: $name är körbar!" >&2
+        #((executable_file_count++))  # Ökar värdet på filräknaren.
     fi
 done < "$TEMP_FILE"
 # Läser från .temp filen.
 
+# Kallar på sammanfattningsfunktionen.
+#summarize_results
+
 log_message "INFO" "Skanning klar."
+echo "Skanning klar. Se logg för mer info."
 rm -f "$TEMP_FILE"
