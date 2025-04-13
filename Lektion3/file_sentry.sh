@@ -2,17 +2,16 @@
 # file_sentry.sh - Övervakar en katalog för misstänkta filer
 # Skapat av: Hugo Backe, April 2025
 
-# Globala variablar.
-readonly LOG_FILE="C:\Users\Hugo\Documents\GitHub\Shellscripting-kurs\Lektion3\defender_log.txt"    #Loggfil i min lektions folder.
-readonly TEMP_FILE="C:\Users\Hugo\Documents\GitHub\Shellscripting-kurs\Lektion3\temp_file_sentry$$.txt"    #Temporär fil i min lektions folder.
-readonly SIZE_THRESHOLD=1048576     # 1MB i bytes.
-readonly TARGET_DIR="$1"    # Första argumentet är katalogen. Användningen blir då ./file_sentry.sh <katalog> där "katalog" blir $1.
-
-
 set -e      # Avslutar vid error. Om ett kommando failar avslutas skriptet direkt.
 set -u      # Avslutar skripet om odefinierade variabler används. 
-trap 'echo "Skript avbrutet"; rm -f "$TEMP_FILE"; exit 1' INT TERM EXIT
+trap 'echo "Skript avbrutet"; rm -f "$TEMP_FILE"; exit 1' INT TERM
 # Reagerar med "set" kommandon. Avslutar skripet på ett rent sätt, meddelar användaren, tar bort .temp filen och stänger med error koden 1.
+
+# Globala variablar.
+readonly LOG_FILE="/c/Users/Hugo/Documents/GitHub/Shellscripting-kurs/Lektion3/defender_log.txt"    #Loggfil i min lektions folder.
+readonly TEMP_FILE="/c/Users/Hugo/Documents/GitHub/Shellscripting-kurs/Lektion3/temp_file_sentry$$.txt"    #Temporär fil i min lektions folder.
+readonly SIZE_THRESHOLD=1048576     # 1MB i bytes.
+readonly TARGET_DIR="${1:-}"    # Första argumentet är katalogen. Användningen blir då ./file_sentry.sh <katalog> där "katalog" blir $1.
 
 
 log_message() {     # Funktion som ska logga meddelanden. Skriver tidstämplar och nivåer i loggfilen, bra för spårbarhet.
@@ -51,9 +50,11 @@ fi
 # Skriver info i loggfilen att skriptet arbetar.
 log_message "INFO" "Skannar $TARGET_DIR för misstänkta filer..."
 
-# Hittar filer och sparar storlekt och rättigheter till .temp filen.
-find "$TARGET_DIR" -type f -exec stat -c "%s %A %n" {} \; > "$TEMP_FILE"
-
+# Hittar filer och sparar storlek och rättigheter till .temp filen. Skriver ett felmeddelande i logg filen om den inte kunde köra kommandot.
+if ! find "$TARGET_DIR" -type f -exec stat -c "%s %A %n" {} \; > "$TEMP_FILE"; then
+    log_message "ERROR" "Kunde inte köra 'find' i $TARGET_DIR."
+    exit 1
+fi
 
 
 # Analyserar varje fil för storlek och rättigheter och skriver till loggfilen samt i terminalen.
