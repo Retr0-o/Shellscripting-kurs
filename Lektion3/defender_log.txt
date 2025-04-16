@@ -1,9 +1,16 @@
-2025-04-13 21:46:54 [ERROR] Ingen katalog angiven, använd följande kommando för att välja katalog: ./file_sentry.sh <Katalog>
-2025-04-13 21:47:00 [ERROR] aaa är inte en katalog.
-2025-04-13 21:47:06 [INFO] Skannar test_dir/ för misstänkta filer...
-2025-04-13 21:47:06 [WARNING] Stor fil: test_dir/big_file.txt (2097152 bytes)
-2025-04-13 21:47:06 [INFO] Skanning klar.
-2025-04-13 22:00:34 [INFO] Skannar test_dir/ för misstänkta filer...
-2025-04-13 22:00:34 [WARNING] Stor fil: test_dir/big_file.txt (2097152 bytes)
-2025-04-13 22:00:34 [WARNING] Körbar fil: test_dir/script.sh (-rwxr-xr-x)
-2025-04-13 22:00:34 [INFO] Skanning klar.
+2025-04-14 00:28:51 [INFO] Skannar test_dir/ för misstänkta filer...
+2025-04-14 00:28:51 [WARNING] Stor fil: test_dir/big_file.txt (2097152 bytes)
+2025-04-14 00:28:51 [WARNING] Körbar fil: test_dir/script.sh (-rwxr-xr-x)
+2025-04-14 00:28:51 [INFO] Skanning klar.
+2025-04-14 00:29:24 [INFO] Skannar test_dir/ för misstänkta filer...
+2025-04-14 00:29:24 [WARNING] Stor fil: test_dir/big_file.txt (2097152 bytes)
+2025-04-14 00:29:24 [WARNING] Körbar fil: test_dir/script.sh (-rwxr-xr-x)
+2025-04-14 00:29:24 [INFO] Skanning klar.
+2025-04-14 00:29:50 [INFO] Skannar test_dir/ för misstänkta filer...
+2025-04-14 00:29:50 [WARNING] Stor fil: test_dir/big_file.txt (2097152 bytes)
+2025-04-14 00:29:50 [WARNING] Körbar fil: test_dir/script.sh (-rwxr-xr-x)
+2025-04-14 00:29:50 [INFO] Skanning klar.
+2025-04-14 00:30:06 [INFO] Skannar test_dir/ för misstänkta filer...
+2025-04-14 00:30:06 [WARNING] Stor fil: test_dir/big_file.txt (2097152 bytes)
+2025-04-14 00:30:06 [WARNING] Körbar fil: test_dir/script.sh (-rwxr-xr-x)
+2025-04-14 00:30:06 [INFO] Skanning klar.
