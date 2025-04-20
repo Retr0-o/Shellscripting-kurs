@@ -2,10 +2,16 @@
 # Skapat av: Hugo Backe, April 2025.
 # Syfte: Skanna loggar, logga resultat och varna om problem.
 
+# _______ Parametrar _______
+param (
+    [Parameter(Mandatory=$true)][string]$LogDir,  # Gör $LogDir till en parameter som måste anges vid körning.
+    [string]$OutputLog = "C:\Users\Hugo\Documents\GitHub\Shellscripting-kurs\Lektion6\monitor.log" # Standardvärde för $OutputLog. Går att ändra vid körning av skript.
+)
+
 # _______ Variabler _______
-$LogDir = "C:\Users\Hugo\Documents\GitHub\Shellscripting-kurs\Lektion6\Logs"                    # Mapp för loggar som ska analyseras.
-$OutputLog = "C:\Users\Hugo\Documents\GitHub\Shellscripting-kurs\Lektion6\Logs\monitor.log"     # Fil där info om loggarna ska skrivas till.
-$Keywords = @("error","failed")         # Nyckelord för filanalyseringen.
+# $LogDir = "C:\Users\Hugo\Documents\GitHub\Shellscripting-kurs\Lektion6\Logs"                 # Mapp för loggar som ska analyseras. Används ej med valbar sökväg (linje 7)
+# $OutputLog = "C:\Users\Hugo\Documents\GitHub\Shellscripting-kurs\Lektion6\monitor.log"       # Fil där info om loggarna ska skrivas till. Används ej, flyttad till linje 8.
+$Keywords = @("error","failed","warning")         # Nyckelord för filanalyseringen.
 
 # _______ Funktioner _______
 function Write-Log {        # Funktion för att skriva info om loggar till en fil. 
@@ -19,9 +25,10 @@ function Write-Log {        # Funktion för att skriva info om loggar till en fi
 
 # _______ Validering _______
 Write-Log -Level "INFO" -Message "Startar loggövervakning..."   # Användning av funktionen "Write-Log" och inmatning av parametrar.
-if (-not(Test-Path $LogDir)) {       # Testar så att sökvägen för $LogDir är 
+if (-not(Test-Path $LogDir)) {       # Testar så att sökvägen för $LogDir finns och är en mapp.
     Write-Log -Level "ERROR" -Message "Katalogen $LogDir finns inte."
     Write-Error "Katalogen finns inte"
+    exit 1
 }
 
 # _______ Huvudlogik _______        # Huvudlogiken i detta skript. För varje loggfil så kollar den igenom efter specifika nyckelord. 
